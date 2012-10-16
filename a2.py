@@ -86,4 +86,38 @@ def insert_sequence(dna1,dna2,index):
     '''
     return dna1[:index]+dna2+dna1[index:]
 
+get_complement(n):
+    ''' (str) -> str
+
+    Return the complement of a nucleotide.
+
+    >>>get_complement('A')
+    T
+    >>>get_complement('C')
+    G
+
+    '''
+    if n=='A':
+        return 'T'
+    elif n=='T':
+        return 'A'
+    elif n=='C':
+        return 'G'
+    elif n=='G':
+        return'C'
+
+def get_complementray_sequence(dna):
+    ''' (str) -> str
+
+    Return the complement of a given DNA sequence.
+
+    >>>get_complementray_sequence('ATCGGACT')
+    TAGCCTGA
+    >>>get_complementray_sequence('GCACTCC')
+    CGTGAGG
+    '''
+    com_seq=''
+    for n in dna:
+        com_seq+=get_complement(n)
+    return com_seq
 
