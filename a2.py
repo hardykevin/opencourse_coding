@@ -71,8 +71,7 @@ def is_valid_sequence(dna):
     for n in dna:
         if n not in ['A','T','C','G']:
             return False
-        else:
-            return True
+    return True
 
 def insert_sequence(dna1,dna2,index):
     ''' (str,str,int) -> str
@@ -86,7 +85,7 @@ def insert_sequence(dna1,dna2,index):
     '''
     return dna1[:index]+dna2+dna1[index:]
 
-get_complement(n):
+def get_complement(n):
     ''' (str) -> str
 
     Return the complement of a nucleotide.
