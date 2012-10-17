@@ -103,7 +103,7 @@ def get_complement(n):
     elif n=='C':
         return 'G'
     elif n=='G':
-        return'C'
+        return 'C'
 
 def get_complementray_sequence(dna):
     ''' (str) -> str
