@@ -105,7 +105,7 @@ def get_complement(n):
     elif n=='G':
         return 'C'
 
-def get_complementray_sequence(dna):
+def get_complementary_sequence(dna):
     ''' (str) -> str
 
     Return the complement of a given DNA sequence.
