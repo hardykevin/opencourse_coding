@@ -15,8 +15,11 @@ def evaluatePoly(poly, x):
     returns: float
     '''
     # FILL IN YOUR CODE HERE...
-
-
+    result=0
+    xlist=[pow(x,n) for n in range(len(poly))]
+    for polyitem,xitem in zip(poly,xlist):
+        result+=polyitem*xitem
+    return result/1.0
 
 
 
@@ -33,7 +36,14 @@ def computeDeriv(poly):
     returns: list of numbers (floats)
     '''
     # FILL IN YOUR CODE HERE...
-
+    if len(poly)==1:
+        return [0.0]
+    else:
+        xpow=[n for n in range(len(poly))]
+        newpoly=[]
+        for p,x in zip(poly,xpow):
+            newpoly.append(p*x*1.0)
+        return newpoly[1:] 
 
 
 
