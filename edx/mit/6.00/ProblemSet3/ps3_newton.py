@@ -63,3 +63,4 @@ def computeRoot(poly, x_0, epsilon):
     returns: list [float, int]
     '''
     # FILL IN YOUR CODE HERE...
+    
