@@ -63,4 +63,17 @@ def computeRoot(poly, x_0, epsilon):
     returns: list [float, int]
     '''
     # FILL IN YOUR CODE HERE...
-    
+    if abs(evaluatePoly(poly,x_0))<epsilon:
+        return [poly,globals()['count']]
+    else:
+        dpoly=computeDeriv(poly)
+        newx=x_0-evaluatePoly(poly,x_0)/evaluatePoly(dpoly,x_0)
+        globals()['count']+=1
+        print dpoly,newx,evaluatePoly(dpoly,x_0),globals()['count']
+        return computeRoot(poly,newx,epsilon)
+
+count=0
+poly=[-13.39,0.0,17.5,3.0,1.0]
+x_0=0.1
+epsilon=.0001
+computeRoot(poly,x_0,epsilon)
