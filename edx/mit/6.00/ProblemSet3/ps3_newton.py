@@ -5,6 +5,7 @@
 
 
 # Problem 1: Polynomials
+import copy
 def evaluatePoly(poly, x):
     '''
     Computes the value of a polynomial function at given value x. Returns that
@@ -47,7 +48,7 @@ def computeDeriv(poly):
 
 
 
-
+count=0
 # Problem 3: Newton's Method
 def computeRoot(poly, x_0, epsilon):
     '''
@@ -64,16 +65,15 @@ def computeRoot(poly, x_0, epsilon):
     '''
     # FILL IN YOUR CODE HERE...
     if abs(evaluatePoly(poly,x_0))<epsilon:
-        return [poly,globals()['count']]
+        exts=copy.deepcopy(globals()['count'])
+        globals()['count']=0
+        return [x_0,exts]
     else:
         dpoly=computeDeriv(poly)
         newx=x_0-evaluatePoly(poly,x_0)/evaluatePoly(dpoly,x_0)
         globals()['count']+=1
-        print dpoly,newx,evaluatePoly(dpoly,x_0),globals()['count']
+        print "newx=%s,count=%s,epsilon=%s" % (evaluatePoly(poly,newx),globals()['count'],epsilon)
         return computeRoot(poly,newx,epsilon)
 
-count=0
-poly=[-13.39,0.0,17.5,3.0,1.0]
-x_0=0.1
-epsilon=.0001
-computeRoot(poly,x_0,epsilon)
+print computeRoot([1, 9, 8], -3, .01)
+print computeRoot([1, -1, 1, -1], 2, .001)
