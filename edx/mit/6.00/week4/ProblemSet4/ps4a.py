@@ -78,6 +78,15 @@ def getWordScore(word, n):
     """
     # TO DO ... <-- Remove this comment when you code this function
 
+    score=0
+    wl=len(word)
+    lv=globals()['SCRABBLE_LETTER_VALUES']
+    for letter in word: 
+        score+=lv[letter]
+    score*=wl
+    if wl==n:
+        score+=50
+    return score
 
 
 #
