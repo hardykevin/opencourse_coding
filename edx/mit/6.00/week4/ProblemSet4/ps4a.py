@@ -176,8 +176,14 @@ def isValidWord(word, hand, wordList):
     wordList: list of lowercase strings
     """
     # TO DO ... <-- Remove this comment when you code this function
-
-
+    worddic=getFrequencyDict(word)
+    isletterinhand=True
+    for letter in worddic:
+        if letter not in hand:
+            isletterinhand=False
+        elif worddic[letter]>hand[letter]:
+            isletterinhand=False
+    return (word in wordList) and isletterinhand
 #
 # Problem #4: Playing a hand
 #
