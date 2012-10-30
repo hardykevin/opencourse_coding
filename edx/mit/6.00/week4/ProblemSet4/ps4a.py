@@ -7,6 +7,7 @@
 
 import random
 import string
+import copy
 
 VOWELS = 'aeiou'
 CONSONANTS = 'bcdfghjklmnpqrstvwxyz'
@@ -154,8 +155,10 @@ def updateHand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    temp=copy.deepcopy(hand)
+    for letter in word:
+        temp[letter]=temp[letter]-1
+    return temp
 
 
 #
