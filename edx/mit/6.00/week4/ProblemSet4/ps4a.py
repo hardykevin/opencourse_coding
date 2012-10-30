@@ -175,7 +175,6 @@ def isValidWord(word, hand, wordList):
     hand: dictionary (string -> int)
     wordList: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
     worddic=getFrequencyDict(word)
     isletterinhand=True
     for letter in worddic:
@@ -195,9 +194,7 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
-
-
+    return sum([ hand[letter] for letter in hand])
 
 def playHand(hand, wordList, n):
     """
@@ -223,31 +220,36 @@ def playHand(hand, wordList, n):
     """
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of two numbers: the number of letters left in your hand and the total score
-    
+    current_hand=hand
+    total_score=0
     # As long as there are still letters left in the hand:
-    
+    while calculateHandlen(current_hand)>0:
+        print "Current Hand:  ",displayHand(current_hand)
+        
         # Display the hand
-        
-        # Ask user for input
-        
-        # If the input is a single period:
-        
-            # End the game (break out of the loop)
-
-            
+        input_word=raw_input("Enter word, or a \".\" to indicate that you are finished: ")
+        if input_word=='.':
+            print "Goodbye! Total score: "+str(total_score)+" points."
+            break
+        else: 
         # Otherwise (the input is not a single period):
-        
+            if not isValidWord(input_word,hand,wordList): 
             # If the word is not valid:
-            
+                print "Invalid word, please try again."
+                print 
                 # Reject invalid word (print a message followed by a blank line)
-
+            else:
             # Otherwise (the word is valid):
-
+                get_score=getWordScore(input_word,n)
+                total_score+=get_score
+                print "\""+input_word+"\" earned "+str(get_score)+" points. Total: "+str(total_score)+ " points."       
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-                
+                print
+                current_hand=updateHand(current_hand,input_word) 
                 # Update the hand 
-                
-
+    
+    if input_word!=".":
+        print "Run out of letters. Total score: "+str(total_score)+" points."   
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
 
 
