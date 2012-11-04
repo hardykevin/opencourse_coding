@@ -157,7 +157,20 @@ def findBestShift(wordList, text):
     returns: 0 <= int < 26
     """
     ### TODO
-
+    maxcount=0
+    bestshift=0
+    for s in range(27):
+        wordlist=applyShift(text,s).split(' ')
+        ninlist=0
+        for word in wordlist:
+            if isWord(wordList,word):
+                ninlist+=1
+        if ninlist>maxcount:
+            maxcount=ninlist
+            bestshift=s
+    return bestshift
+        
+        
 
 def decryptStory():
     """
@@ -169,8 +182,9 @@ def decryptStory():
     returns: string - story in plain text
     """
     ### TODO.
-    return "Not yet implemented." # Remove this comment when you code the function
-
+    wordList=loadWords()
+    encodetext=getStoryString()
+    return applyShift(encodetext,findBestShift(wordList,encodetext))
 #
 # Build data structures used for entire session and run encryption
 #
