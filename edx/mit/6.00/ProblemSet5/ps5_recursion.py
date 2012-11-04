@@ -16,7 +16,10 @@ def reverseString(aStr):
     returns: a reversed string
     """
     ### TODO.
-
+    if len(aStr)==0:
+        return ''
+    else:
+        return aStr[-1]+reverseString(aStr[:-1])
 #
 # Problem 4: Erician
 #
