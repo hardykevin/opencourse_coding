@@ -40,7 +40,13 @@ def x_ian(x, word):
     returns: True if word is x_ian, False otherwise
     """
     ###TODO.
-
+    if len(x)==0:
+        return True
+    else:
+        if x[0] not in word:
+            return False
+        return x_ian(x[1:],word[word.find(x[0]):])
+print x_ian('','fuck')
 #
 # Problem 5: Typewriter
 #
