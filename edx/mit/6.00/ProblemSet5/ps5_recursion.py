@@ -46,7 +46,6 @@ def x_ian(x, word):
         if x[0] not in word:
             return False
         return x_ian(x[1:],word[word.find(x[0]):])
-print x_ian('','fuck')
 #
 # Problem 5: Typewriter
 #
@@ -61,4 +60,9 @@ def insertNewlines(text, lineLength):
         the next word.
     returns: a string, with newline characters inserted appropriately. 
     """
-    ### TODO.
+    findspace=text.find(' ',lineLength-1)
+    if findspace==-1:
+        return text
+    else:
+        return text[:findspace+1]+'\n'+insertNewlines(text[findspace+1:],lineLength)
+
