@@ -22,7 +22,7 @@ def is_valid_word(wordlist, word):
     >>> is_valid_word(['ANT', 'BOX', 'SOB', 'TO'], 'TO')
     True
     '''
-
+    return word in wordlist
 
 def make_str_from_row(board, row_index):
     ''' (list of list of str, int) -> str
@@ -33,7 +33,10 @@ def make_str_from_row(board, row_index):
     >>> make_str_from_row([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], 0)
     'ANTT'
     '''
-
+    string=''
+    for l in board[row_index]:
+        string+=l
+    return string
 
 def make_str_from_column(board, column_index):
     ''' (list of list of str, int) -> str
@@ -44,7 +47,10 @@ def make_str_from_column(board, column_index):
     >>> make_str_from_column([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], 1)
     'NS'
     '''
-
+    string=''
+    for lst in board:
+        string+=lst[column_index]
+    return string
 
 def board_contains_word_in_row(board, word):
     ''' (list of list of str, str) -> bool
@@ -104,7 +110,7 @@ def word_score(word):
 
     >>> word_score('DRUDGERY')
     16
-    '''
+    '''  
 
 
 def update_score(player_info, word):
@@ -125,7 +131,7 @@ def num_words_on_board(board, words):
     >>> num_words_on_board([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], ['ANT', 'BOX', 'SOB', 'TO'])
     3
     '''
-
+    
 
 def read_words(words_file):
     ''' (file open for reading) -> list of str
