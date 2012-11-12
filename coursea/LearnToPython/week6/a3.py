@@ -84,7 +84,10 @@ def board_contains_word_in_column(board, word):
     >>> board_contains_word_in_column([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], 'NO')
     False
     '''
-
+    for col_index in range(len(board[0])):
+        if word in make_str_from_column(board,col_index):
+            return True
+    return False
 
 def board_contains_word(board, word):
     '''(list of list of str, str) -> bool
@@ -96,7 +99,7 @@ def board_contains_word(board, word):
     >>> board_contains_word([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], 'ANT')
     True
     '''
-
+    return board_contains_word_in_row(board,word) or board_contains_word_in_column(board,word)
 
 def word_score(word):
     '''(str) -> int
@@ -111,7 +114,15 @@ def word_score(word):
     >>> word_score('DRUDGERY')
     16
     '''  
-
+    length=len(word)
+    if length in range(0,3):
+        return 0
+    elif length in range(3,7):
+        return length
+    elif length in range(7,10):
+        return length*2
+    elif length>=10:
+        return length*3
 
 def update_score(player_info, word):
     '''([str, int] list, str) -> NoneType
@@ -121,7 +132,7 @@ def update_score(player_info, word):
 
     >>> update_score(['Jonathan', 4], 'ANT')
     '''
-
+    player_info[1]+=word_score(word)
 
 def num_words_on_board(board, words):
     '''(list of list of str, list of str) -> int
@@ -131,7 +142,11 @@ def num_words_on_board(board, words):
     >>> num_words_on_board([['A', 'N', 'T', 'T'], ['X', 'S', 'O', 'B']], ['ANT', 'BOX', 'SOB', 'TO'])
     3
     '''
-    
+    number=0
+    for word in words:
+        if board_contains_word(board,word):
+            number+=1
+    return number
 
 def read_words(words_file):
     ''' (file open for reading) -> list of str
@@ -142,7 +157,10 @@ def read_words(words_file):
     Precondition: Each line of the file contains a word in uppercase characters
     from the standard English alphabet.
     '''
-
+    wordlist=[]
+    for line in words_file:
+        wordlist.append(line.rstrip('\n'))
+    return wordlist
 
 def read_board(board_file):
     ''' (file open for reading) -> list of list of str
@@ -150,4 +168,7 @@ def read_board(board_file):
     Return a board read from open file board_file. The board file will contain
     one row of the board per line. Newlines are not included in the board.
     '''
-
+    board=[]
+    for line in board_file:
+        board.append(list(line.rstrip('\n')))
+    return board
