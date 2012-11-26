@@ -89,7 +89,7 @@ class RectangularRoom(object):
         pos: a Position
         """
         if (pos.x//1,pos.y//1) not in self.cleaned:
-            self.cleaned+=(pos.x//1,pos.y//1)  
+            self.cleaned.append((pos.x//1,pos.y//1))  
        
     def isTileCleaned(self, m, n):
         """
@@ -117,7 +117,7 @@ class RectangularRoom(object):
 
         returns: an integer
         """
-        return sum(self.cleaned)
+        return len(self.cleaned)
         
     def getRandomPosition(self):
         """
@@ -228,11 +228,12 @@ class StandardRobot(Robot):
                 self.setRobotPosition(new)
                 self.setRobotDirection(direction)
                 self.room.cleanTileAtPosition(new)
+                return 
             else:
                 return recposition(random.random()*360)
         recposition(self.direction)
 # Uncomment this line to see your implementation of StandardRobot in action!
-##testRobotMovement(StandardRobot, RectangularRoom)
+#testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 3
@@ -254,7 +255,7 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    anim = ps7_visualize.RobotVisualization(num_robots, width, height,0.8)
+    anim = ps7_visualize.RobotVisualization(num_robots, width, height,0.1)
     def robotMaker(num_robots,robot_type,speed,room):
         rlist=[]
         for n in range(num_robots):
@@ -266,10 +267,12 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
             for robot in robots:
                 cleaned=robot.room.getNumCleanedTiles()/1.0
                 allTiles=robot.room.getNumTiles()/1.0
+                print "Cleaned: %s,All of them: %s" % (cleaned,allTiles)
                 if cleaned/allTiles>=min_coverage:
                     return steps
                 anim.update(room, robots)
                 robot.updatePositionAndClean()
+                
             steps+=1
             
 
@@ -280,7 +283,7 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
         tlist.append(workstream(robots,min_coverage))
     anim.done()
     return sum(tlist)/(len(tlist)*1.0)    
-runSimulation(1, 2.0, 10, 12, 0.96, 1000,StandardRobot)
+runSimulation(2, 3.0, 15, 13, 0.98, 1000,StandardRobot)
                  
 # === Problem 4
 class RandomWalkRobot(Robot):
