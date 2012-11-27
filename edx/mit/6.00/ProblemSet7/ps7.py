@@ -228,7 +228,6 @@ class StandardRobot(Robot):
                 self.setRobotPosition(new)
                 self.setRobotDirection(direction)
                 self.room.cleanTileAtPosition(new)
-                return 
             else:
                 return recposition(random.random()*360)
         recposition(self.direction)
@@ -255,35 +254,27 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    anim = ps7_visualize.RobotVisualization(num_robots, width, height,0.1)
-    def robotMaker(num_robots,robot_type,speed,room):
-        rlist=[]
-        for n in range(num_robots):
-            rlist.append(robot_type(room,speed))
-        return rlist
-    def workstream(robots,min_coverage):
-        steps=0
-        while True:
-            for robot in robots:
-                cleaned=robot.room.getNumCleanedTiles()/1.0
-                allTiles=robot.room.getNumTiles()/1.0
-                print "Cleaned: %s,All of them: %s" % (cleaned,allTiles)
-                if cleaned/allTiles>=min_coverage:
-                    return steps
-                anim.update(room, robots)
-                robot.updatePositionAndClean()
-                
-            steps+=1
-            
-
-    room=RectangularRoom(width,height)
-    robots=robotMaker(num_robots,robot_type,speed,room)
     tlist=[]
     for num in range(num_trials):
-        tlist.append(workstream(robots,min_coverage))
-    anim.done()
-    return sum(tlist)/(len(tlist)*1.0)    
-runSimulation(2, 3.0, 15, 13, 0.98, 1000,StandardRobot)
+        tlist.append(workflow(num_robots,speed,width,height,min_coverage,robot_type))
+    return sum(tlist)/(len(tlist)*1.0)  
+
+def workflow(num_robots,speed,width,height,min_coverage,robot_type):
+    room=RectangularRoom(width,height)
+    robots=[]
+    goal=room.getNumTiles()*min_coverage
+    for n in range(num_robots):
+        robots.append(robot_type(room,speed))
+    steps=0
+    while room.getNumCleanedTiles()<goal:
+        for robot in robots:
+            robot.updatePositionAndClean()
+        steps+=1
+    return steps
+
+
+  
+runSimulation(2, 3.0, 15, 13, 0.98, 30,StandardRobot)
                  
 # === Problem 4
 class RandomWalkRobot(Robot):
@@ -298,9 +289,16 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
-
-
+       def recposition(direction):
+            new=self.position.getNewPosition(direction,self.speed)
+            if self.room.isPositionInRoom(new):
+                self.setRobotPosition(new)
+                self.setRobotDirection(direction)
+                self.room.cleanTileAtPosition(new)
+            else:
+                return recposition(random.random()*360)
+        recposition(random.random()*360)
+        
 # === Problem 5
 #
 # 1) Write a function call to showPlot1 that generates an appropriately-labeled
